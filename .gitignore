@@ -9,7 +9,8 @@ logs/
 *.log
 
 # Environment variables
-.env
+.env*
+!.env.example
 
 # Build files
 dist/
