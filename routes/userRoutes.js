@@ -10,7 +10,7 @@ const User = require("../models/User");
 // Register user
 router.post("/auth/register", async (req, res) => {
 	try {
-		const { name, email, password, userType } = req.body;
+		const { name, email, password, role } = req.body;
 
 		// Check if user exists
 		const userExists = await User.findOne({ email });
@@ -23,7 +23,7 @@ router.post("/auth/register", async (req, res) => {
 			name,
 			email,
 			password,
-			userType,
+			role,
 		});
 
 		// Generate tokens
@@ -46,7 +46,7 @@ router.post("/auth/register", async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
-			userType: user.userType,
+			role: user.role,
 			accessToken,
 		});
 	} catch (error) {
@@ -91,7 +91,7 @@ router.post("/auth/login", async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
-			userType: user.userType,
+			role: user.role,
 			accessToken,
 		});
 	} catch (error) {
