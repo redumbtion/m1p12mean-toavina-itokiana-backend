@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
 		},
 		userType: {
 			type: String,
-			enum: ["mechanic", "staff", "client"],
+			enum: ["client", "manager", "mechanic"],
 			required: true,
 		},
 		refreshToken: {
