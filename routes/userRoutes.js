@@ -8,9 +8,9 @@ const {
 const User = require("../models/User");
 
 // Register user
-router.post("/register", async (req, res) => {
+router.post("/auth/register", async (req, res) => {
 	try {
-		const { name, email, password, userType } = req.body;
+		const { name, email, password, role } = req.body;
 
 		// Check if user exists
 		const userExists = await User.findOne({ email });
@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
 			name,
 			email,
 			password,
-			userType,
+			role,
 		});
 
 		// Generate tokens
@@ -46,7 +46,7 @@ router.post("/register", async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
-			userType: user.userType,
+			role: user.role,
 			accessToken,
 		});
 	} catch (error) {
@@ -55,7 +55,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login user
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
 	try {
 		const { email, password } = req.body;
 
@@ -91,7 +91,7 @@ router.post("/login", async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
-			userType: user.userType,
+			role: user.role,
 			accessToken,
 		});
 	} catch (error) {
@@ -100,7 +100,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Refresh token
-router.post("/refresh-token", async (req, res) => {
+router.post("/auth/refresh-token", async (req, res) => {
 	try {
 		const refreshToken = req.cookies.refreshToken;
 
@@ -136,7 +136,7 @@ router.post("/refresh-token", async (req, res) => {
 });
 
 // Logout
-router.post("/logout", async (req, res) => {
+router.post("/auth/logout", async (req, res) => {
 	try {
 		const refreshToken = req.cookies.refreshToken;
 
