@@ -10,10 +10,20 @@ const app = express();
 // Connect to database
 connectDB();
 
+// Log all requests
+app.use((req, res, next) => {
+	console.log(`${req.method} ${req.url}`);
+	next();
+});
+
 // Middleware
 app.use(
 	cors({
-		origin: process.env.CLIENT_URL || "http://localhost:3000",
+		origin: [
+			process.env.CLIENT_URL,
+			"http://localhost:4200",
+			"http://localhost:3000",
+		],
 		credentials: true,
 	})
 );
@@ -22,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Routes
-app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api", require("./routes/userRoutes"));
 
 // Basic route
 app.get("/", (req, res) => {
